@@ -1,23 +1,25 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const API_BASE_URL = "/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // Request interceptor for logging
 api.interceptors.request.use(
   (config) => {
-    console.log(`Making ${config.method?.toUpperCase()} request to ${config.url}`);
+    console.log(
+      `Making ${config.method?.toUpperCase()} request to ${config.url}`
+    );
     return config;
   },
   (error) => {
-    console.error('Request error:', error);
+    console.error("Request error:", error);
     return Promise.reject(error);
   }
 );
@@ -28,18 +30,18 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error('Response error:', error);
-    
+    console.error("Response error:", error);
+
     if (error.response?.status === 404) {
-      throw new Error('Resource not found');
+      throw new Error("Resource not found");
     } else if (error.response?.status === 400) {
-      throw new Error(error.response.data.message || 'Invalid request');
+      throw new Error(error.response.data.message || "Invalid request");
     } else if (error.response?.status >= 500) {
-      throw new Error('Server error. Please try again later.');
-    } else if (error.code === 'ECONNABORTED') {
-      throw new Error('Request timeout. Please try again.');
+      throw new Error("Server error. Please try again later.");
+    } else if (error.code === "ECONNABORTED") {
+      throw new Error("Request timeout. Please try again.");
     } else {
-      throw new Error(error.response?.data?.message || 'An error occurred');
+      throw new Error(error.response?.data?.message || "An error occurred");
     }
   }
 );
@@ -47,25 +49,25 @@ api.interceptors.response.use(
 export interface Task {
   id: string;
   description: string;
-  status: 'pending' | 'complete';
+  status: "pending" | "complete";
   created_at: string;
   updated_at: string;
 }
 
 export interface CreateTaskRequest {
   description: string;
-  status?: 'pending' | 'complete';
+  status?: "pending" | "complete";
 }
 
 export interface UpdateTaskRequest {
   description?: string;
-  status?: 'pending' | 'complete';
+  status?: "pending" | "complete";
 }
 
 export interface GetTasksParams {
-  status?: 'pending' | 'complete';
-  sort?: 'created_at' | 'updated_at' | 'description' | 'status';
-  order?: 'ASC' | 'DESC';
+  status?: "pending" | "complete";
+  sort?: "created_at" | "updated_at" | "description" | "status";
+  order?: "ASC" | "DESC";
 }
 
 export interface TaskResponse {
@@ -85,7 +87,7 @@ export interface TasksResponse {
 
 export const taskService = {
   async getAllTasks(params: GetTasksParams = {}): Promise<TasksResponse> {
-    const response = await api.get<TasksResponse>('/tasks', { params });
+    const response = await api.get<TasksResponse>("/tasks", { params });
     return response.data;
   },
 
@@ -95,7 +97,7 @@ export const taskService = {
   },
 
   async createTask(data: CreateTaskRequest): Promise<TaskResponse> {
-    const response = await api.post<TaskResponse>('/tasks', data);
+    const response = await api.post<TaskResponse>("/tasks", data);
     return response.data;
   },
 
@@ -104,7 +106,9 @@ export const taskService = {
     return response.data;
   },
 
-  async deleteTask(id: string): Promise<{ message: string; deletedTask: Task }> {
+  async deleteTask(
+    id: string
+  ): Promise<{ message: string; deletedTask: Task }> {
     const response = await api.delete(`/tasks/${id}`);
     return response.data;
   },

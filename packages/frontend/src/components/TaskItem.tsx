@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { useTask } from '../context/TaskContext';
-import { Task } from '../context/TaskContext';
-import { Check, X, Edit2, Trash2, Clock, CheckCircle } from 'lucide-react';
+import React, { useState } from "react";
+
+import { Check, X, Edit2, Trash2, Clock, CheckCircle } from "lucide-react";
+import { useTask } from "../context/TaskContext";
+import { Task } from "../context/TaskContext";
 
 interface TaskItemProps {
   task: Task;
@@ -19,21 +20,21 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
     try {
       await toggleTaskStatus(task.id);
     } catch (error) {
-      console.error('Failed to toggle task status:', error);
+      console.error("Failed to toggle task status:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleSaveEdit = async () => {
-    if (editValue.trim() === '') return;
-    
+    if (editValue.trim() === "") return;
+
     setIsLoading(true);
     try {
       await updateTask(task.id, { description: editValue.trim() });
       setIsEditing(false);
     } catch (error) {
-      console.error('Failed to update task:', error);
+      console.error("Failed to update task:", error);
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +50,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
     try {
       await deleteTask(task.id);
     } catch (error) {
-      console.error('Failed to delete task:', error);
+      console.error("Failed to delete task:", error);
     } finally {
       setIsLoading(false);
       setShowDeleteConfirm(false);
@@ -57,21 +58,23 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm border-l-4 transition-all duration-200 hover:shadow-md ${
-      task.status === 'complete' 
-        ? 'border-green-500 bg-green-50' 
-        : 'border-blue-500 hover:border-blue-600'
-    }`}>
+    <div
+      className={`bg-white rounded-lg shadow-sm border-l-4 transition-all duration-200 hover:shadow-md ${
+        task.status === "complete"
+          ? "border-green-500 bg-green-50"
+          : "border-blue-500 hover:border-blue-600"
+      }`}
+    >
       <div className="p-4">
         {/* Task Header */}
         <div className="flex items-start justify-between mb-3">
@@ -80,15 +83,17 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
               onClick={handleToggleStatus}
               disabled={isLoading}
               className={`flex-shrink-0 w-6 h-6 rounded-full border-2 transition-all duration-200 ${
-                task.status === 'complete'
-                  ? 'bg-green-500 border-green-500 text-white'
-                  : 'border-gray-300 hover:border-blue-500'
+                task.status === "complete"
+                  ? "bg-green-500 border-green-500 text-white"
+                  : "border-gray-300 hover:border-blue-500"
               }`}
             >
-              {task.status === 'complete' && <Check size={16} />}
+              {task.status === "complete" && (
+                <Check size={16} className="mx-auto" />
+              )}
             </button>
             <div className="flex items-center space-x-1 text-sm text-gray-500">
-              {task.status === 'complete' ? (
+              {task.status === "complete" ? (
                 <CheckCircle size={14} className="text-green-500" />
               ) : (
                 <Clock size={14} className="text-blue-500" />
@@ -140,7 +145,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                 </button>
                 <button
                   onClick={handleSaveEdit}
-                  disabled={isLoading || editValue.trim() === ''}
+                  disabled={isLoading || editValue.trim() === ""}
                   className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 transition-colors duration-200"
                 >
                   <Check size={16} />
@@ -148,9 +153,11 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
               </div>
             </div>
           ) : (
-            <p className={`text-gray-800 leading-relaxed ${
-              task.status === 'complete' ? 'line-through text-gray-500' : ''
-            }`}>
+            <p
+              className={`text-gray-800 leading-relaxed ${
+                task.status === "complete" ? "line-through text-gray-500" : ""
+              }`}
+            >
               {task.description}
             </p>
           )}
@@ -169,9 +176,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Delete Task</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Delete Task
+            </h3>
             <p className="text-gray-600 mb-6">
-              Are you sure you want to delete this task? This action cannot be undone.
+              Are you sure you want to delete this task? This action cannot be
+              undone.
             </p>
             <div className="flex justify-end space-x-3">
               <button
