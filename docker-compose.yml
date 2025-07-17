@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./packages/frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=http://backend:3000
+        - VITE_PORT=5173
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://backend:3000
+      - VITE_PORT=5173
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./packages/backend
+      dockerfile: Dockerfile
+      args:
+        - PORT=3000
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+    volumes:
+      - ./packages/backend/data:/app/data
