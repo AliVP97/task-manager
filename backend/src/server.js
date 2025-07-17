@@ -2,9 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
 import { initializeDatabase } from './database/init.js';
 import taskRoutes from './routes/tasks.js';
 import { errorHandler } from './middleware/errorHandler.js';
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
