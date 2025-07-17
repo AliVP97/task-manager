@@ -198,8 +198,8 @@ These values are configured in the docker-compose.yml file and passed to the con
 ### Root Directory
 
 - `npm run dev` - Start both backend and frontend in development mode
-- `npm run install-deps` - Install all dependencies
-- `npm run build` - Build the frontend for production
+- `npm run frontend` - Start frontend in development mode
+- `npm run backend` - Start backend in development mode
 
 ### Backend Directory
 
@@ -237,59 +237,6 @@ The application is fully responsive with breakpoints for:
 - **Accessibility**: ARIA labels and keyboard navigation
 - **Loading States**: Visual feedback during operations
 - **Error Handling**: User-friendly error messages
-
-## 🚀 Production Deployment
-
-### Building for Production
-
-```bash
-# Build the frontend
-npm run build
-
-# The built files will be in frontend/dist/
-```
-
-### Environment Variables for Production
-
-- Set `NODE_ENV=production`
-- Configure proper CORS origins
-- Set up proper database path
-- Configure security headers
-
-## 🔮 Future Enhancements
-
-- **User Authentication**: JWT-based authentication system
-- **Task Categories**: Organize tasks into categories
-- **Due Dates**: Add deadline functionality
-- **Priority Levels**: High, medium, low priority tasks
-- **Search Functionality**: Full-text search across tasks
-- **Bulk Operations**: Select and modify multiple tasks
-- **Export/Import**: JSON/CSV export and import
-- **Real-time Updates**: WebSocket integration
-- **Dark Mode**: Theme switching capability
-
-## 🐛 Known Limitations
-
-- Single-user application (no authentication)
-- Local SQLite database (not suitable for multi-user production)
-- No real-time collaboration features
-- Limited file upload capabilities
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 📞 Support
-
-For support or questions, please open an issue in the GitHub repository.
 
 ---
 
