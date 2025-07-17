@@ -4,15 +4,14 @@
   "type": "module",
   "private": true,
   "workspaces": [
-    "frontend",
-    "backend"
+    "packages/*"
   ],
   "scripts": {
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "backend": "npm run dev --workspace=backend",
-    "frontend": "npm run dev --workspace=frontend",
-    "build": "npm run build --workspace=frontend",
-    "start": "npm run start --workspace=backend"
+    "backend": "npm run dev --workspace=task-manager-backend",
+    "frontend": "npm run dev --workspace=task-manager-frontend",
+    "build": "npm run build --workspace=task-manager-frontend",
+    "start": "npm run start --workspace=task-manager-backend"
   },
   "dependencies": {
     "concurrently": "^8.2.2"
