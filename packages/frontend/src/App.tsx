@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { TaskProvider } from './context/TaskContext';
-import TaskList from './components/TaskList';
-import TaskForm from './components/TaskForm';
-import TaskFilters from './components/TaskFilters';
-import LoadingSpinner from './components/LoadingSpinner';
-import ErrorMessage from './components/ErrorMessage';
-import { CheckSquare, Plus } from 'lucide-react';
+import { useState, useEffect } from "react";
+
+import { CheckSquare, Plus } from "lucide-react";
+import { TaskProvider } from "./context/TaskContext";
+import TaskList from "./components/TaskList";
+import TaskForm from "./components/TaskForm";
+import TaskFilters from "./components/TaskFilters";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
   const [showForm, setShowForm] = useState(false);
@@ -53,12 +53,12 @@ function App() {
                   onClick={() => setShowForm(!showForm)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                     showForm
-                      ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg'
+                      ? "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg"
                   }`}
                 >
                   <Plus size={20} />
-                  {showForm ? 'Cancel' : 'Add Task'}
+                  {showForm ? "Cancel" : "Add Task"}
                 </button>
               </div>
             </div>
