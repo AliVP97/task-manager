@@ -8,10 +8,10 @@ import taskRoutes from "./routes/tasks.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
 // Load environment variables from root directory
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: "../../.env" });
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 3000;
 
 // Security middleware
 app.use(helmet());
@@ -29,8 +29,11 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? ["https://your-frontend-domain.com"]
-        : ["http://localhost:5173", "http://localhost:3000"],
+        ? ["https://frontend-domain.com"]
+        : [
+            `http://localhost:${process.env.VITE_PORT}`,
+            `http://localhost:${process.env.PORT}`,
+          ],
     credentials: true,
   })
 );

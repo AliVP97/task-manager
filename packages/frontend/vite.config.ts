@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  envDir: "..", // Look for .env files in the root directory
+  envDir: "../..", // Look for .env files in the root directory
   server: {
     port: parseInt(process.env.VITE_PORT || "5173"),
     proxy: {
