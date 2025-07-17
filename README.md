@@ -5,6 +5,7 @@ A modern, full-stack task management application built with React, Node.js, and 
 ## 🚀 Features
 
 ### Core Functionality
+
 - **Complete CRUD Operations**: Create, read, update, and delete tasks
 - **Real-time Status Updates**: Toggle task completion with visual feedback
 - **Advanced Filtering**: Filter tasks by status (all, pending, complete)
@@ -14,6 +15,7 @@ A modern, full-stack task management application built with React, Node.js, and 
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 
 ### Technical Features
+
 - **RESTful API**: Proper HTTP methods and status codes
 - **Error Handling**: Comprehensive error handling on both client and server
 - **Loading States**: Visual feedback during API operations
@@ -24,6 +26,7 @@ A modern, full-stack task management application built with React, Node.js, and 
 ## 🛠️ Technology Stack
 
 ### Frontend
+
 - **React 18** with TypeScript
 - **Tailwind CSS** for styling
 - **Lucide React** for icons
@@ -31,6 +34,7 @@ A modern, full-stack task management application built with React, Node.js, and 
 - **Vite** for build tooling
 
 ### Backend
+
 - **Node.js** with Express
 - **SQLite3** for database
 - **UUID** for unique identifiers
@@ -40,32 +44,32 @@ A modern, full-stack task management application built with React, Node.js, and 
 
 ## 📋 Prerequisites
 
-- Node.js (version 18 or higher)
-- npm or yarn package manager
+- Docker and Docker Compose
+- Git
 
 ## 🚀 Quick Start
 
-### 1. Clone and Install Dependencies
+### 1. Clone the Repository
 
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd task-manager-app
-
-# Install all dependencies (root, backend, and frontend)
-npm run install-deps
+cd task-manager
 ```
 
-### 2. Start the Development Server
+### 2. Start with Docker Compose
 
 ```bash
-# Start both backend and frontend concurrently
-npm run dev
+# Build and start all services
+docker-compose up --build
 ```
 
 This will start:
-- Backend server on `http://localhost:5000`
-- Frontend development server on `http://localhost:5173`
+
+- Frontend server on `http://localhost:5173`
+- Backend server on `http://localhost:3000`
+
+The application will be ready when you see the message that both services are running.
 
 ### 3. Access the Application
 
@@ -74,26 +78,31 @@ Open your browser and navigate to `http://localhost:5173`
 ## 📁 Project Structure
 
 ```
-task-manager-app/
-├── backend/
-│   ├── src/
-│   │   ├── database/
-│   │   │   └── init.js          # Database initialization
-│   │   ├── middleware/
-│   │   │   ├── errorHandler.js  # Error handling middleware
-│   │   │   └── validation.js    # Input validation
-│   │   ├── routes/
-│   │   │   └── tasks.js         # Task routes
-│   │   └── server.js            # Express server setup
-│   ├── data/                    # SQLite database files
-│   └── package.json
-├── frontend/
-│   ├── src/
-│   │   ├── components/          # React components
-│   │   ├── context/             # React Context API
-│   │   ├── services/            # API service layer
-│   │   └── main.tsx             # Entry point
-│   └── package.json
+task-manager/
+├── packages/
+│   ├── backend/
+│   │   ├── src/
+│   │   │   ├── database/
+│   │   │   │   └── init.js      # Database initialization
+│   │   │   ├── middleware/
+│   │   │   │   ├── errorHandler.js  # Error handling middleware
+│   │   │   │   └── validation.js    # Input validation
+│   │   │   ├── routes/
+│   │   │   │   └── tasks.js     # Task routes
+│   │   │   └── server.js        # Express server setup
+│   │   ├── data/                # SQLite database files (gitignored)
+│   │   ├── Dockerfile          # Backend container configuration
+│   │   └── package.json
+│   └── frontend/
+│       ├── src/
+│       │   ├── components/      # React components
+│       │   ├── context/         # React Context API
+│       │   ├── services/        # API service layer
+│       │   └── main.tsx         # Entry point
+│       ├── Dockerfile          # Frontend container configuration
+│       └── package.json
+├── docker-compose.yml          # Docker services configuration
+├── .env.example               # Environment variables template
 └── README.md
 ```
 
@@ -101,19 +110,20 @@ task-manager-app/
 
 ### Tasks API
 
-| Method | Endpoint | Description | Body |
-|--------|----------|-------------|------|
-| GET | `/api/tasks` | Get all tasks | - |
-| GET | `/api/tasks?status=pending` | Get filtered tasks | - |
-| GET | `/api/tasks?sort=created_at&order=DESC` | Get sorted tasks | - |
-| GET | `/api/tasks/:id` | Get specific task | - |
-| POST | `/api/tasks` | Create new task | `{ description: string, status?: string }` |
-| PUT | `/api/tasks/:id` | Update task | `{ description?: string, status?: string }` |
-| DELETE | `/api/tasks/:id` | Delete task | - |
+| Method | Endpoint                                | Description        | Body                                        |
+| ------ | --------------------------------------- | ------------------ | ------------------------------------------- |
+| GET    | `/api/tasks`                            | Get all tasks      | -                                           |
+| GET    | `/api/tasks?status=pending`             | Get filtered tasks | -                                           |
+| GET    | `/api/tasks?sort=created_at&order=DESC` | Get sorted tasks   | -                                           |
+| GET    | `/api/tasks/:id`                        | Get specific task  | -                                           |
+| POST   | `/api/tasks`                            | Create new task    | `{ description: string, status?: string }`  |
+| PUT    | `/api/tasks/:id`                        | Update task        | `{ description?: string, status?: string }` |
+| DELETE | `/api/tasks/:id`                        | Delete task        | -                                           |
 
 ### Example API Responses
 
 #### GET /api/tasks
+
 ```json
 {
   "tasks": [
@@ -135,6 +145,7 @@ task-manager-app/
 ```
 
 #### POST /api/tasks
+
 ```json
 {
   "message": "Task created successfully",
@@ -151,6 +162,7 @@ task-manager-app/
 ## 🗄️ Database Schema
 
 ### Tasks Table
+
 ```sql
 CREATE TABLE tasks (
   id TEXT PRIMARY KEY,
@@ -163,31 +175,39 @@ CREATE TABLE tasks (
 
 ## 🔧 Environment Configuration
 
-The application uses environment variables for configuration:
+The application uses Docker environment variables for configuration. All values are hardcoded in docker-compose.yml for simplicity:
 
-### Backend (.env)
+### Backend Environment
+
 ```
-PORT=5000
-NODE_ENV=development
+PORT=3000
+HOST=0.0.0.0
 ```
 
-### Frontend (.env)
+### Frontend Environment
+
 ```
-VITE_API_URL=http://localhost:5000/api
+VITE_PORT=5173
+VITE_API_URL=http://localhost:3000
 ```
+
+These values are configured in the docker-compose.yml file and passed to the containers at build and runtime.
 
 ## 🧪 Available Scripts
 
 ### Root Directory
+
 - `npm run dev` - Start both backend and frontend in development mode
 - `npm run install-deps` - Install all dependencies
 - `npm run build` - Build the frontend for production
 
 ### Backend Directory
+
 - `npm run dev` - Start backend with nodemon
 - `npm start` - Start backend in production mode
 
 ### Frontend Directory
+
 - `npm run dev` - Start frontend development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
@@ -204,6 +224,7 @@ VITE_API_URL=http://localhost:5000/api
 ## 📱 Responsive Design
 
 The application is fully responsive with breakpoints for:
+
 - **Mobile**: < 768px
 - **Tablet**: 768px - 1024px
 - **Desktop**: > 1024px
@@ -220,6 +241,7 @@ The application is fully responsive with breakpoints for:
 ## 🚀 Production Deployment
 
 ### Building for Production
+
 ```bash
 # Build the frontend
 npm run build
@@ -228,6 +250,7 @@ npm run build
 ```
 
 ### Environment Variables for Production
+
 - Set `NODE_ENV=production`
 - Configure proper CORS origins
 - Set up proper database path
